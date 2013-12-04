@@ -3,7 +3,7 @@ require 'serialport'
 
 class BlinkyTape 
 
-   def initialize(port_str = "/dev/tty.usbmodemfd121", ledCount = 60)
+   def initialize(port_str = "/dev/tty.usbmodemfa131", ledCount = 60)
     @port_str = port_str
     @ledCount = ledCount
     baud_rate = 57600 # the rate that BlinyTape expects
