@@ -78,8 +78,9 @@ void fadeup(int secs) {
   set_colour(255, 140, 50);
   for(int scale = 0; scale < maxbrightness; scale++) { 
     LEDS.setBrightness(scale);
+    //Serial.println(scale);
     LEDS.show();
-    delay((secs * 1000) / maxbrightness);
+    delay(secs * ((float)1000 / maxbrightness));
   }
 }
 
@@ -89,8 +90,10 @@ void fadedown(int secs) {
   LEDS.show();
   for(int scale = maxbrightness; scale >= 0; scale--) {
     LEDS.setBrightness(scale);
+    //Serial.println(scale);
+    //Serial.println(secs * ((float) 1000 / maxbrightness));
     LEDS.show();
-    delay((secs * 1000) / maxbrightness);
+    delay(secs * ((float) 1000 / maxbrightness));
   }
   set_colour(0,0,0);
   LEDS.setBrightness(maxbrightness);
