@@ -18,7 +18,7 @@ struct CRGB leds[LED_COUNT];
 #endif
 
 String inData;
-const int maxbrightness = 93; // Limit max current draw to 1A
+const int maxbrightness = 60.0; // 93 = limit max current draw to 1A. 60 is good for rpi
 int currentRed = 0;
 int currentGreen = 0;
 int currentBlue = 0;
@@ -79,8 +79,7 @@ void fadeup(int secs) {
   for(int scale = 0; scale < maxbrightness; scale++) { 
     LEDS.setBrightness(scale);
     LEDS.show();
-    Serial.println(scale);
-    delay((float) secs * 1000 / maxbrightness);
+    delay((secs * 1000) / maxbrightness);
   }
 }
 
@@ -88,11 +87,10 @@ void fadedown(int secs) {
   fade_colour(255, 140, 50);
   LEDS.setBrightness(maxbrightness);
   LEDS.show();
-  for(int scale = maxbrightness; scale >= 0; scale--) { 
+  for(int scale = maxbrightness; scale >= 0; scale--) {
     LEDS.setBrightness(scale);
     LEDS.show();
-    Serial.println(scale);
-    delay((float) secs * 1000 / maxbrightness);
+    delay((secs * 1000) / maxbrightness);
   }
   set_colour(0,0,0);
   LEDS.setBrightness(maxbrightness);
@@ -137,10 +135,10 @@ void loop() {
           fade_colour(red,green,blue);  
         } else if (command == "fadedown") {
           Serial.println("fade brightness down over " + blue);
-          fadedown(blue); // TODO: 60 secs * 10 mins = 600 secs
+          fadedown(strtol(charBuffer, 0, 10));
         } else if (command == "fadeup") {
           Serial.println("fade brightness up over " + blue);
-          fadeup(blue); // TODO: 60 secs * 30 mins = 1800 secs
+          fadeup(strtol(charBuffer, 0, 10));
         }
         inData = ""; // Clear received buffer
       }
